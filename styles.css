@@ -162,93 +162,12 @@ img {
 
 #luxury-canvas {
   position: absolute;
-  z-index: 6;
+  z-index: 2;
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.72;
-  mix-blend-mode: screen;
+  opacity: 0.86;
   pointer-events: none;
-}
-
-.css-orbit {
-  position: absolute;
-  z-index: 6;
-  top: 6%;
-  right: -8%;
-  width: min(780px, 58vw);
-  aspect-ratio: 1;
-  pointer-events: none;
-  perspective: 1000px;
-  transform: translate3d(0, calc(var(--scene) * -70px), 0) rotateY(calc(-20deg + var(--scene) * 42deg));
-  transform-style: preserve-3d;
-}
-
-.orbit-ring,
-.orbit-plane {
-  position: absolute;
-  inset: 7%;
-  border-radius: 50%;
-  border: 10px solid rgba(199, 160, 98, 0.64);
-  transform-style: preserve-3d;
-  animation: orbitSpin 22s linear infinite;
-}
-
-.ring-one {
-  border-color: rgba(199, 160, 98, 0.72);
-  transform: rotateX(72deg) rotateY(18deg);
-}
-
-.ring-two {
-  inset: 2%;
-  border-width: 8px;
-  border-color: rgba(45, 117, 108, 0.68);
-  transform: rotateX(18deg) rotateY(74deg);
-  animation-duration: 28s;
-  animation-direction: reverse;
-}
-
-.ring-three {
-  inset: 15%;
-  border-width: 7px;
-  border-color: rgba(157, 49, 88, 0.7);
-  transform: rotateX(108deg) rotateZ(34deg);
-  animation-duration: 18s;
-}
-
-.orbit-plane {
-  inset: 24% 18%;
-  border: 1px solid rgba(255, 250, 242, 0.22);
-  background: rgba(255, 250, 242, 0.14);
-  backdrop-filter: blur(10px);
-  animation: planeDrift 16s ease-in-out infinite alternate;
-}
-
-.plane-one {
-  transform: rotateY(58deg) rotateZ(-10deg) translateZ(80px);
-}
-
-.plane-two {
-  inset: 32% 8%;
-  background: rgba(45, 117, 108, 0.12);
-  transform: rotateY(-48deg) rotateX(18deg) translateZ(-70px);
-  animation-delay: -6s;
-}
-
-@keyframes orbitSpin {
-  to {
-    rotate: 0 1 1 360deg;
-  }
-}
-
-@keyframes planeDrift {
-  to {
-    translate: 0 -18px;
-  }
-}
-
-.webgl-ready .css-orbit {
-  opacity: 0.7;
 }
 
 .hero-grain {
@@ -571,6 +490,8 @@ h3 {
 }
 
 .ritual-stages article {
+  --step-lift: 0px;
+  --step-depth: 0deg;
   display: grid;
   grid-template-columns: 72px 0.45fr 1fr;
   gap: 18px;
@@ -580,6 +501,9 @@ h3 {
   border: 1px solid var(--line-light);
   background: var(--ivory-2);
   box-shadow: 0 18px 45px rgba(16, 16, 15, 0.06);
+  transform: translateY(var(--step-lift)) rotateX(var(--step-depth));
+  transform-origin: center;
+  transition: transform 160ms linear, box-shadow 240ms ease;
 }
 
 .ritual-stages span,
@@ -618,6 +542,8 @@ h3 {
 }
 
 .treatment-card {
+  --card-lift: 0px;
+  --card-tilt: 0deg;
   position: relative;
   min-height: 500px;
   padding: 20px;
@@ -625,13 +551,14 @@ h3 {
   border: 1px solid var(--line-dark);
   background: rgba(255, 250, 242, 0.055);
   transform-style: preserve-3d;
+  transform: translateY(var(--card-lift)) rotateX(var(--card-tilt));
   transition: transform 300ms ease, background 300ms ease, border-color 300ms ease;
 }
 
 .treatment-card:hover {
   border-color: rgba(199, 160, 98, 0.48);
   background: rgba(255, 250, 242, 0.09);
-  transform: translateY(-10px) rotateX(3deg);
+  transform: translateY(calc(var(--card-lift) - 10px)) rotateX(calc(var(--card-tilt) + 3deg));
 }
 
 .treatment-media {
@@ -686,14 +613,15 @@ h3 {
   border-bottom: 1px solid var(--line-dark);
 }
 
-.team-orbit {
+.team-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   perspective: 900px;
 }
 
-.team-orbit span {
+.team-list span {
+  --member-depth: 0deg;
   min-height: 92px;
   display: flex;
   align-items: center;
@@ -702,7 +630,8 @@ h3 {
   background: rgba(255, 250, 242, 0.075);
   color: var(--ivory-2);
   font-weight: 850;
-  transform: rotateY(calc(var(--scene, 0) * 6deg));
+  transform: rotateY(var(--member-depth));
+  transition: transform 160ms linear;
 }
 
 .contact-card {
@@ -937,7 +866,7 @@ html.can-animate [data-reveal].is-visible {
 
   .treatment-grid,
   .gallery-rail,
-  .team-orbit {
+  .team-list {
     grid-template-columns: 1fr;
   }
 
