@@ -3,13 +3,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Maria Laure Clinic | Bursa Nilüfer Güzellik Kliniği</title>
-    <meta name="description" content="Maria Laure Clinic, Bursa Nilüfer'de lazer epilasyon, cilt bakımı, tırnak, makyaj, kaş-kirpik ve bölgesel bakım hizmetleri için premium klinik deneyimi sunar.">
-    <meta name="theme-color" content="#10100f">
+    <title>Maria Laure Clinic | Bursa Nilüfer Güzellik ve Estetik Merkezi</title>
+    <meta name="description" content="Maria Laure Clinic, Bursa Nilüfer'de lazer epilasyon, cilt bakımı, tırnak, makyaj, kaş-kirpik ve bölgesel bakım hizmetleri için sinematik ve premium klinik deneyimi sunar.">
+    <meta name="theme-color" content="#0d0d0c">
     <link rel="icon" href="source-assets/kolayrandevu/logo.png">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <div class="experience-loader" data-loader aria-hidden="true">
+      <div class="loader-mark">
+        <img src="source-assets/kolayrandevu/logo.png" alt="">
+        <span>Maria Laure Clinic</span>
+      </div>
+      <div class="loader-line"><span></span></div>
+      <p>Güzelliğin Sırrı yükleniyor</p>
+    </div>
+
+    <canvas id="luxury-canvas" class="experience-canvas" aria-hidden="true"></canvas>
+    <div class="scene-fallback" aria-hidden="true">
+      <img src="source-assets/kolayrandevu/gallery-02.jpg" alt="">
+    </div>
+    <div class="grain-layer" aria-hidden="true"></div>
     <div class="scroll-progress" aria-hidden="true"></div>
 
     <header class="site-header" data-header>
@@ -18,182 +32,134 @@
         <span>Maria Laure Clinic</span>
       </a>
       <nav class="site-nav" aria-label="Ana menü">
-        <a href="#treatments">Hizmetler</a>
-        <a href="#ritual">Deneyim</a>
-        <a href="#gallery">Galeri</a>
-        <a href="#contact">İletişim</a>
+        <a href="#ritual" data-nav="1">Deneyim</a>
+        <a href="#treatments" data-nav="2">Hizmetler</a>
+        <a href="#gallery" data-nav="3">Galeri</a>
+        <a href="#contact" data-nav="5">Randevu</a>
       </nav>
-      <a class="header-cta" href="tel:+905422299796">Randevu</a>
+      <a class="header-cta" href="tel:+905422299796">Hemen Ara</a>
     </header>
 
-    <main id="top">
-      <section class="hero-world" data-scroll-scene>
-        <div class="hero-sticky">
-          <canvas id="luxury-canvas" aria-hidden="true"></canvas>
-          <div class="hero-grain" aria-hidden="true"></div>
-          <div class="hero-backdrop" aria-hidden="true">
-            <img src="source-assets/kolayrandevu/gallery-02.jpg" alt="">
-          </div>
+    <aside class="scene-index" aria-label="Sayfa sahneleri">
+      <a href="#top" data-nav="0"><span>00</span><em>Giriş</em></a>
+      <a href="#ritual" data-nav="1"><span>01</span><em>Ritüel</em></a>
+      <a href="#treatments" data-nav="2"><span>02</span><em>Bakım</em></a>
+      <a href="#gallery" data-nav="3"><span>03</span><em>Mekan</em></a>
+      <a href="#proof" data-nav="4"><span>04</span><em>Güven</em></a>
+      <a href="#contact" data-nav="5"><span>05</span><em>Randevu</em></a>
+    </aside>
 
-          <div class="hero-layout">
-            <div class="hero-copy" data-reveal>
-              <p class="eyebrow">Bursa Nilüfer / Güzellik Kliniği</p>
-              <h1>
-                <span>Maria Laure</span>
-                <span>Clinic</span>
-              </h1>
-              <p class="hero-lede">Güzelliğin Sırrı</p>
-              <p class="hero-text">
-                Güzellik ritüellerini klinik netliği, butik konfor ve sinematik bir marka deneyimiyle birleştiren Nilüfer adresi.
-              </p>
-              <div class="hero-actions">
-                <a class="button button-primary" href="https://www.kolayrandevu.com/isletme/maria-laure-clinic" target="_blank" rel="noreferrer">
-                  Randevu Al
-                  <span aria-hidden="true">→</span>
-                </a>
-                <a class="button button-ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=40.2146,28.9771" target="_blank" rel="noreferrer">
-                  Haritada Aç
-                  <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="spatial-stack" data-reveal data-reveal-delay="140" aria-label="Maria Laure Clinic görsel sahnesi">
-              <figure class="spatial-card card-a" data-depth="0.18">
-                <img src="source-assets/kolayrandevu/gallery-04.jpg" alt="Maria Laure Clinic bakım odası">
-              </figure>
-              <figure class="spatial-card card-b" data-depth="-0.12">
-                <img src="source-assets/kolayrandevu/gallery-03.jpg" alt="Maria Laure Clinic uygulama alanı">
-              </figure>
-              <figure class="spatial-card card-c" data-depth="0.26">
-                <img src="source-assets/kolayrandevu/gallery-01.jpg" alt="Maria Laure Clinic lazer epilasyon odası">
-              </figure>
-              <div class="spatial-badge" data-depth="-0.2">
-                <strong>4.8</strong>
-                <span>448 ziyaretçi puanı</span>
-              </div>
+    <main id="top" class="experience">
+      <section class="chapter hero-chapter" data-stage="0" data-chapter>
+        <div class="chapter-shell hero-grid">
+          <div class="hero-copy" data-reveal>
+            <p class="eyebrow">Bursa Nilüfer / Güzellik ve Estetik Merkezi</p>
+            <h1>
+              <span>Maria Laure</span>
+              <span>Clinic</span>
+            </h1>
+            <p class="hero-lede">Güzelliğin Sırrı</p>
+            <p class="hero-text">
+              Lazer epilasyon, cilt bakımı, tırnak, makyaj, kaş-kirpik ve bölgesel bakım hizmetlerini tek bir premium klinik yolculuğunda birleştiren Nilüfer adresi.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="https://www.kolayrandevu.com/isletme/maria-laure-clinic" target="_blank" rel="noreferrer">
+                Randevu Al
+                <span aria-hidden="true">→</span>
+              </a>
+              <a class="button button-ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=40.2146,28.9771" target="_blank" rel="noreferrer">
+                Yol Tarifi
+                <span aria-hidden="true">↗</span>
+              </a>
             </div>
           </div>
 
-          <div class="hero-dashboard" data-reveal data-reveal-delay="260">
-            <div>
-              <strong>222</strong>
-              <span>Yorum</span>
-            </div>
-            <div>
-              <strong>28K</strong>
-              <span>Instagram topluluğu</span>
-            </div>
-            <div>
-              <strong>09:00-21:00</strong>
-              <span>Her gün açık</span>
-            </div>
-            <div>
-              <strong>Nilüfer</strong>
-              <span>Bursa</span>
+          <div class="hero-proof" data-reveal data-reveal-delay="140">
+            <figure>
+              <img src="source-assets/kolayrandevu/gallery-04.jpg" alt="Maria Laure Clinic bakım odası">
+            </figure>
+            <div class="proof-metrics">
+              <span><strong>4.8</strong> Puan</span>
+              <span><strong>222</strong> Yorum</span>
+              <span><strong>28K</strong> Instagram</span>
+              <span><strong>09:00-21:00</strong> Her gün</span>
             </div>
           </div>
         </div>
-      </section>
-
-      <section class="marquee-band" aria-label="Hizmet özetleri">
-        <div class="marquee-track">
-          <span>Cilt Bakımı</span>
-          <span>Lazer Epilasyon</span>
-          <span>Kaş & Kirpik</span>
-          <span>Kalıcı Makyaj</span>
-          <span>Tırnak</span>
-          <span>G5 & Lenf Drenaj</span>
-          <span>Cilt Bakımı</span>
-          <span>Lazer Epilasyon</span>
-          <span>Kaş & Kirpik</span>
-          <span>Kalıcı Makyaj</span>
-          <span>Tırnak</span>
-          <span>G5 & Lenf Drenaj</span>
+        <div class="chapter-hint" aria-hidden="true">
+          <span>Scroll</span>
+          <i></i>
         </div>
       </section>
 
-      <section class="ritual section-ivory" id="ritual">
-        <div class="section-shell ritual-grid">
-            <div class="ritual-copy" data-reveal>
+      <section class="chapter ritual-chapter" id="ritual" data-stage="1" data-chapter>
+        <div class="chapter-shell split-layout">
+          <div class="chapter-copy" data-reveal>
             <p class="eyebrow">Klinik Yolculuğu</p>
-            <h2>Scroll akışı bir güzellik salonu ziyaretinin adımlarını izliyor.</h2>
+            <h2>Scroll, bir güzellik salonu ziyaretinin ritmine dönüşür.</h2>
             <p>
-              İlk izlenimden hizmet seçimine, bakım odasından randevu aksiyonuna kadar tüm hareketler Maria Laure Clinic'in gerçek hizmetleri ve mekan görselleri etrafında kurgulandı.
+              Karşılama, hizmet seçimi, bakım odası ve randevu aksiyonu aynı görsel evrenin parçaları olarak ilerler. Hareketlerin tamamı klinik, cihaz, ayna, bakım yatağı ve gerçek mekan fotoğrafları etrafında kurgulandı.
             </p>
           </div>
-          <div class="ritual-stages">
+          <div class="ritual-sequence" aria-label="Klinik yolculuğu adımları">
             <article data-reveal>
               <span>01</span>
               <h3>Karşılama</h3>
-              <p>İlk ekranda marka, görsel kalite, güven puanı ve randevu aksiyonu aynı anda görünür.</p>
+              <p>Marka, güven puanı ve randevu aksiyonu ilk ekranda netleşir.</p>
             </article>
-            <article data-reveal data-reveal-delay="90">
+            <article data-reveal data-reveal-delay="80">
               <span>02</span>
-              <h3>Seçim</h3>
-              <p>Hizmetler, “bakım sistemi” hissi veren güçlü kategorilerle ayrılır.</p>
+              <h3>Konsültasyon</h3>
+              <p>Hizmet kategorileri bakım sistemleri gibi birbirinden ayrılır.</p>
             </article>
-            <article data-reveal data-reveal-delay="180">
+            <article data-reveal data-reveal-delay="160">
               <span>03</span>
-              <h3>Randevu</h3>
-              <p>Telefon, yol tarifi ve online randevu tek panelde hızlı karara bağlanır.</p>
+              <h3>Bakım Odası</h3>
+              <p>Görseller, ziyaretçiyi bekleme alanından uygulama odalarına taşır.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="treatments section-ink" id="treatments">
-        <div class="section-shell">
-          <div class="section-heading" data-reveal>
+      <section class="chapter treatments-chapter" id="treatments" data-stage="2" data-chapter>
+        <div class="chapter-shell">
+          <div class="chapter-heading" data-reveal>
             <p class="eyebrow">Hizmet Haritası</p>
-            <h2>Her kategori, scroll sırasında klinik sahnesinin ayrı bir bakım modülüne dönüşür.</h2>
+            <h2>Her kategori sahnede ayrı bir bakım modülü gibi açılır.</h2>
           </div>
-
-          <div class="treatment-grid">
-            <article class="treatment-card" data-reveal>
-              <div class="treatment-media">
-                <img src="source-assets/kolayrandevu/gallery-05.jpg" alt="Cilt bakımı odası">
-              </div>
+          <div class="service-grid">
+            <article class="service-node" data-service="skin" data-reveal>
+              <img src="source-assets/kolayrandevu/gallery-05.jpg" alt="Cilt bakımı odası">
               <span>01</span>
               <h3>Cilt Bakımı</h3>
               <p>Klasik cilt bakımı, dermaroller, Cazmara maske ve ön görüşme.</p>
             </article>
-            <article class="treatment-card" data-reveal data-reveal-delay="80">
-              <div class="treatment-media">
-                <img src="source-assets/kolayrandevu/gallery-01.jpg" alt="Lazer epilasyon odası">
-              </div>
+            <article class="service-node" data-service="laser" data-reveal data-reveal-delay="70">
+              <img src="source-assets/kolayrandevu/gallery-01.jpg" alt="Lazer epilasyon odası">
               <span>02</span>
               <h3>Lazer Epilasyon</h3>
               <p>Yüz, kol, bacak, sırt, koltuk altı ve tüm vücut uygulamaları.</p>
             </article>
-            <article class="treatment-card" data-reveal data-reveal-delay="160">
-              <div class="treatment-media">
-                <img src="source-assets/kolayrandevu/gallery-08.jpg" alt="Kaş ve kirpik bakım alanı">
-              </div>
+            <article class="service-node" data-service="lash" data-reveal data-reveal-delay="140">
+              <img src="source-assets/kolayrandevu/gallery-08.jpg" alt="Kaş ve kirpik bakım alanı">
               <span>03</span>
               <h3>Kaş & Kirpik</h3>
               <p>İpek kirpik, lifting, laminasyon, boyama ve microblading.</p>
             </article>
-            <article class="treatment-card" data-reveal>
-              <div class="treatment-media">
-                <img src="source-assets/kolayrandevu/gallery-09.jpg" alt="Tırnak hizmetleri alanı">
-              </div>
+            <article class="service-node" data-service="nail" data-reveal>
+              <img src="source-assets/kolayrandevu/gallery-09.jpg" alt="Tırnak hizmetleri alanı">
               <span>04</span>
               <h3>Tırnak</h3>
               <p>Manikür, pedikür, protez tırnak, kalıcı oje ve aksesuar.</p>
             </article>
-            <article class="treatment-card" data-reveal data-reveal-delay="80">
-              <div class="treatment-media">
-                <img src="source-assets/kolayrandevu/gallery-10.jpg" alt="Makyaj hizmetleri alanı">
-              </div>
+            <article class="service-node" data-service="makeup" data-reveal data-reveal-delay="70">
+              <img src="source-assets/kolayrandevu/gallery-10.jpg" alt="Makyaj hizmetleri alanı">
               <span>05</span>
               <h3>Makyaj</h3>
               <p>Profesyonel, gündelik, gece, gelin makyajı ve kalıcı uygulamalar.</p>
             </article>
-            <article class="treatment-card" data-reveal data-reveal-delay="160">
-              <div class="treatment-media">
-                <img src="source-assets/kolayrandevu/gallery-06.jpg" alt="Bölgesel bakım alanı">
-              </div>
+            <article class="service-node" data-service="body" data-reveal data-reveal-delay="140">
+              <img src="source-assets/kolayrandevu/gallery-06.jpg" alt="Bölgesel bakım alanı">
               <span>06</span>
               <h3>Bölgesel Bakım</h3>
               <p>G5 masajı, lenf drenaj, ağda ve ön görüşme randevusu.</p>
@@ -202,60 +168,69 @@
         </div>
       </section>
 
-      <section class="immersive-gallery section-ivory" id="gallery" data-scroll-gallery>
-        <div class="section-shell">
-          <div class="section-heading split-heading" data-reveal>
-            <div>
-              <p class="eyebrow">Mekan Kanıtı</p>
-              <h2>Galeri, ziyaretçiyi bekleme alanından bakım odalarına doğru taşıyor.</h2>
-            </div>
+      <section class="chapter gallery-chapter" id="gallery" data-stage="3" data-chapter>
+        <div class="chapter-shell gallery-layout">
+          <div class="chapter-copy" data-reveal>
+            <p class="eyebrow">Mekan Kanıtı</p>
+            <h2>Galeri düz bir liste değil, içinden geçilen klinik koridoru gibi davranır.</h2>
             <p>
-              Klinik fotoğrafları yerel dosyalardan geliyor. Yayına almadan önce işletme görsel kullanım iznini onaylamalı.
+              Görseller yerel dosyalardan yüklenir. Düşük çözünürlük ve filigran riski, cam katmanlar ve kontrollü kadrajlarla daha premium bir sunuma çevrildi.
             </p>
           </div>
-        </div>
-        <div class="gallery-rail">
-          <figure class="gallery-panel panel-1" data-reveal>
-            <img src="source-assets/kolayrandevu/gallery-02.jpg" alt="Maria Laure Clinic bekleme alanı">
-          </figure>
-          <figure class="gallery-panel panel-2" data-reveal data-reveal-delay="80">
-            <img src="source-assets/kolayrandevu/gallery-04.jpg" alt="Maria Laure Clinic bakım odası">
-          </figure>
-          <figure class="gallery-panel panel-3" data-reveal data-reveal-delay="160">
-            <img src="source-assets/kolayrandevu/gallery-07.jpg" alt="Maria Laure Clinic uygulama alanı">
-          </figure>
-          <figure class="gallery-panel panel-4" data-reveal data-reveal-delay="220">
-            <img src="source-assets/kolayrandevu/gallery-03.jpg" alt="Maria Laure Clinic iç mekan">
-          </figure>
-        </div>
-      </section>
-
-      <section class="team section-ink" id="team">
-        <div class="section-shell team-grid">
-          <div data-reveal>
-            <p class="eyebrow">Uzman Kadro</p>
-            <h2>Uzman isimleri editoryal bir imza alanı gibi ele alındı.</h2>
-            <p>KolayRandevu profilinde listelenen isimler yayından önce işletme tarafından doğrulanmalı.</p>
-          </div>
-          <div class="team-list" data-reveal data-reveal-delay="120">
-            <span>Meryem Şentürk</span>
-            <span>İrem Kurt</span>
-            <span>Elif Yiğit</span>
-            <span>Emine Tata</span>
-            <span>Fatma Yıldız</span>
-            <span>Gül Örsel</span>
+          <div class="gallery-strip" aria-label="Maria Laure Clinic mekan fotoğrafları">
+            <figure data-reveal><img src="source-assets/kolayrandevu/gallery-02.jpg" alt="Bekleme alanı"></figure>
+            <figure data-reveal data-reveal-delay="60"><img src="source-assets/kolayrandevu/gallery-03.jpg" alt="İç mekan"></figure>
+            <figure data-reveal data-reveal-delay="120"><img src="source-assets/kolayrandevu/gallery-04.jpg" alt="Bakım odası"></figure>
+            <figure data-reveal data-reveal-delay="180"><img src="source-assets/kolayrandevu/gallery-07.jpg" alt="Uygulama alanı"></figure>
           </div>
         </div>
       </section>
 
-      <section class="contact section-ivory" id="contact">
-        <div class="section-shell contact-grid">
-          <div class="contact-copy" data-reveal>
-            <p class="eyebrow">Randevu</p>
-            <h2>Randevu akışı tek ekranda, kararsızlık bırakmadan.</h2>
-            <p>Adres kaynakları arasında fark var. Resmi adres yayından önce netleştirilmeli.</p>
+      <section class="chapter proof-chapter" id="proof" data-stage="4" data-chapter>
+        <div class="chapter-shell proof-layout">
+          <div class="chapter-heading" data-reveal>
+            <p class="eyebrow">Güven Sinyalleri</p>
+            <h2>Bilgiler hızlı karar verecek kadar net, marka hissi premium kalacak kadar rafine.</h2>
           </div>
-          <div class="contact-card" data-reveal data-reveal-delay="120">
+          <div class="signal-grid">
+            <article data-reveal>
+              <span>4.8</span>
+              <h3>Ziyaretçi puanı</h3>
+              <p>KolayRandevu profilindeki 448 ziyaretçi puanı sinyali.</p>
+            </article>
+            <article data-reveal data-reveal-delay="70">
+              <span>222</span>
+              <h3>Yorum</h3>
+              <p>Hizmet deneyimine dair sosyal kanıt.</p>
+            </article>
+            <article data-reveal data-reveal-delay="140">
+              <span>28K</span>
+              <h3>Topluluk</h3>
+              <p>Instagram profilinde görünen takipçi sinyali.</p>
+            </article>
+            <article data-reveal data-reveal-delay="210">
+              <span>7/7</span>
+              <h3>Açık</h3>
+              <p>Her gün 09:00-21:00 randevu akışı.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter contact-chapter" id="contact" data-stage="5" data-chapter>
+        <div class="chapter-shell contact-layout">
+          <div class="chapter-copy" data-reveal>
+            <p class="eyebrow">Randevu Finali</p>
+            <h2>Karar anı tek ekranda kapanır.</h2>
+            <p>
+              İhsaniye, Nilüfer / Bursa konumu, telefonlar, çalışma saatleri ve online randevu aksiyonu aynı final panelinde toplanır.
+            </p>
+            <div class="contact-actions">
+              <a class="button button-primary" href="https://www.kolayrandevu.com/isletme/maria-laure-clinic" target="_blank" rel="noreferrer">Online Randevu</a>
+              <a class="button button-dark" href="https://www.google.com/maps/dir/?api=1&amp;destination=40.2146,28.9771" target="_blank" rel="noreferrer">Yol Tarifi</a>
+            </div>
+          </div>
+          <div class="contact-console" data-reveal data-reveal-delay="120">
             <div>
               <span>Telefon</span>
               <a href="tel:+905422299796">0542 229 97 96</a>
@@ -264,15 +239,15 @@
             </div>
             <div>
               <span>Konum</span>
-              <p>İhsaniye Mah., Fatih Sultan Mehmet Bulvarı, Nilüfer / Bursa</p>
+              <p>İhsaniye, Nilüfer / Bursa</p>
             </div>
             <div>
               <span>Saatler</span>
               <p>Her gün 09:00-21:00</p>
             </div>
-            <div class="contact-actions">
-              <a class="button button-primary" href="https://www.kolayrandevu.com/isletme/maria-laure-clinic" target="_blank" rel="noreferrer">Online Randevu</a>
-              <a class="button button-dark" href="https://www.google.com/maps/dir/?api=1&amp;destination=40.2146,28.9771" target="_blank" rel="noreferrer">Yol Tarifi</a>
+            <div>
+              <span>Instagram</span>
+              <a href="https://www.instagram.com/marialarueclinic/" target="_blank" rel="noreferrer">@marialarueclinic</a>
             </div>
           </div>
         </div>
@@ -285,7 +260,13 @@
       <a href="https://www.instagram.com/marialarueclinic/" target="_blank" rel="noreferrer">@marialarueclinic</a>
     </footer>
 
+    <noscript>
+      <div class="noscript-message">Bu deneyim animasyonlar için JavaScript kullanır. Randevu için 0542 229 97 96 numarasını arayabilirsiniz.</div>
+    </noscript>
+
     <script src="vendor/three.min.js"></script>
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
