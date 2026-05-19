@@ -14,8 +14,6 @@ const state = {
   targetProgress: 0,
   progress: 0,
   activeStage: 0,
-  mouseX: 0,
-  mouseY: 0,
   width: window.innerWidth,
   height: window.innerHeight
 };
@@ -190,6 +188,117 @@ function initGsapEnhancements() {
   });
 
   window.addEventListener("load", () => window.ScrollTrigger.refresh());
+}
+
+function initLuxuryParticles() {
+  const target = document.getElementById("particles-js");
+  if (!target || !window.particlesJS) return;
+
+  const mobile = window.innerWidth < 760;
+  const particleCount = reducedMotion ? (mobile ? 18 : 28) : (mobile ? 38 : 78);
+
+  window.particlesJS("particles-js", {
+    particles: {
+      number: {
+        value: particleCount,
+        density: {
+          enable: true,
+          value_area: mobile ? 520 : 880
+        }
+      },
+      color: {
+        value: ["#c7a062", "#d0678d", "#2d756c", "#fffaf2"]
+      },
+      shape: {
+        type: "circle",
+        stroke: {
+          width: 0,
+          color: "#000000"
+        }
+      },
+      opacity: {
+        value: reducedMotion ? 0.18 : 0.26,
+        random: true,
+        anim: {
+          enable: !reducedMotion,
+          speed: 0.28,
+          opacity_min: 0.08,
+          sync: false
+        }
+      },
+      size: {
+        value: mobile ? 1.8 : 2.25,
+        random: true,
+        anim: {
+          enable: false,
+          speed: 0,
+          size_min: 0.4,
+          sync: false
+        }
+      },
+      line_linked: {
+        enable: true,
+        distance: mobile ? 112 : 148,
+        color: "#c7a062",
+        opacity: mobile ? 0.08 : 0.115,
+        width: 1
+      },
+      move: {
+        enable: !reducedMotion,
+        speed: mobile ? 0.34 : 0.48,
+        direction: "none",
+        random: true,
+        straight: false,
+        out_mode: "out",
+        bounce: false,
+        attract: {
+          enable: false,
+          rotateX: 600,
+          rotateY: 1200
+        }
+      }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: {
+          enable: false,
+          mode: "grab"
+        },
+        onclick: {
+          enable: false,
+          mode: "push"
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 0,
+          line_linked: {
+            opacity: 0
+          }
+        },
+        bubble: {
+          distance: 0,
+          size: 0,
+          duration: 0,
+          opacity: 0,
+          speed: 0
+        },
+        repulse: {
+          distance: 0,
+          duration: 0
+        },
+        push: {
+          particles_nb: 0
+        },
+        remove: {
+          particles_nb: 0
+        }
+      }
+    },
+    retina_detect: true
+  });
 }
 
 function makeBox(THREE, size, material, position, rotation = [0, 0, 0]) {
@@ -372,37 +481,6 @@ function createThreeScene() {
   const textureLoader = new THREE.TextureLoader();
   const stages = [];
 
-  const corridor = new THREE.Group();
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(7.4, 18), mats.floor);
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.set(0, -1.22, -6);
-  corridor.add(floor);
-
-  const backWall = new THREE.Mesh(new THREE.PlaneGeometry(7.4, 3.7), mats.floor);
-  backWall.position.set(0, 0.62, -13.9);
-  backWall.material = mats.glass.clone();
-  backWall.material.opacity = 0.18;
-  corridor.add(backWall);
-
-  for (let i = 0; i < 7; i += 1) {
-    const strip = makeBox(THREE, [0.024, 0.024, 2.2], mats.gold, [-3 + i, -1.18, -2.3 - i * 1.55], [0, 0.6, 0]);
-    strip.material = mats.gold.clone();
-    strip.material.transparent = true;
-    strip.material.opacity = 0.42;
-    corridor.add(strip);
-  }
-  world.add(corridor);
-
-  const path = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-1.9, -1.08, 1.3),
-    new THREE.Vector3(-0.7, -1.03, -1.4),
-    new THREE.Vector3(0.8, -1.0, -4.9),
-    new THREE.Vector3(-0.4, -1.0, -8.6),
-    new THREE.Vector3(0.45, -0.96, -12.7)
-  ]);
-  const pathMesh = new THREE.Mesh(new THREE.TubeGeometry(path, 180, 0.012, 8, false), mats.gold);
-  world.add(pathMesh);
-
   const clinic = new THREE.Group();
   clinic.position.z = -0.4;
   const bed = new THREE.Group();
@@ -534,62 +612,6 @@ function createThreeScene() {
   world.add(contact);
   stages.push({ group: contact, index: 5, materials: captureMaterials(contact) });
 
-  const curtainMaterial = new THREE.ShaderMaterial({
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    uniforms: {
-      time: { value: 0 },
-      progress: { value: 0 },
-      colorA: { value: new THREE.Color(0xa72e63) },
-      colorB: { value: new THREE.Color(0xc7a062) }
-    },
-    vertexShader: `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: `
-      varying vec2 vUv;
-      uniform float time;
-      uniform float progress;
-      uniform vec3 colorA;
-      uniform vec3 colorB;
-      void main() {
-        float scan = sin((vUv.y * 18.0) + time * 1.2 + progress * 10.0) * 0.5 + 0.5;
-        float edge = smoothstep(0.05, 0.46, vUv.x) * smoothstep(0.95, 0.54, vUv.x);
-        vec3 color = mix(colorA, colorB, vUv.y + scan * 0.16);
-        gl_FragColor = vec4(color, edge * scan * 0.18);
-      }
-    `
-  });
-  const curtain = new THREE.Mesh(new THREE.PlaneGeometry(6.8, 3.8), curtainMaterial);
-  curtain.position.set(0, 0.35, -6.6);
-  curtain.rotation.y = -0.18;
-  world.add(curtain);
-
-  const particleCount = mobile ? 260 : 720;
-  const particlePositions = new Float32Array(particleCount * 3);
-  for (let i = 0; i < particleCount; i += 1) {
-    particlePositions[i * 3] = -3.8 + Math.random() * 7.6;
-    particlePositions[i * 3 + 1] = -1.1 + Math.random() * 3.4;
-    particlePositions[i * 3 + 2] = 1.8 - Math.random() * 16.4;
-  }
-  const particleGeometry = new THREE.BufferGeometry();
-  particleGeometry.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
-  const particles = new THREE.Points(
-    particleGeometry,
-    new THREE.PointsMaterial({
-      color: 0xf6e4c0,
-      size: mobile ? 0.018 : 0.014,
-      transparent: true,
-      opacity: 0.48
-    })
-  );
-  world.add(particles);
-
   const cameraStops = [
     { pos: [-0.1, 1.55, 7.25], target: [0, 0.02, -0.62] },
     { pos: [1.05, 1.35, 4.35], target: [0, 0.02, -2.8] },
@@ -623,8 +645,6 @@ function createThreeScene() {
     bed,
     device,
     mirrorFrame,
-    particles,
-    curtainMaterial,
     cameraStops
   };
 
@@ -648,7 +668,7 @@ function resizeThree() {
 }
 
 function fadeForStage(stageFloat, index) {
-  return clamp(1.18 - Math.abs(stageFloat - index) * 0.68, 0.08, 1);
+  return smoothstep(clamp(1 - Math.abs(stageFloat - index) / 0.86, 0, 1));
 }
 
 function renderThree(time = 0) {
@@ -666,8 +686,6 @@ function renderThree(time = 0) {
     bed,
     device,
     mirrorFrame,
-    particles,
-    curtainMaterial,
     cameraStops
   } = threeState;
 
@@ -692,19 +710,19 @@ function renderThree(time = 0) {
   const mobile = window.innerWidth < 760;
 
   camera.position.set(
-    pos[0] + state.mouseX * (mobile ? 0.05 : 0.16),
-    pos[1] + state.mouseY * (mobile ? 0.035 : 0.08),
+    pos[0],
+    pos[1],
     pos[2] + (mobile ? 0.8 : 0)
   );
   camera.lookAt(new THREE.Vector3(target[0], target[1], target[2]));
 
-  world.rotation.y = state.mouseX * 0.035;
+  world.rotation.y = 0;
   world.position.x = mobile ? 0.12 : 0;
 
   stages.forEach((stage) => {
     const fade = fadeForStage(stageFloat, stage.index);
     setMaterialsFade(stage.materials, fade);
-    stage.group.visible = fade > 0.11;
+    stage.group.visible = fade > 0.025;
     stage.group.position.y = stage.group.userData.baseY + Math.sin(t * 0.55 + stage.index) * (reducedMotion ? 0 : 0.018);
   });
 
@@ -725,11 +743,6 @@ function renderThree(time = 0) {
     panel.rotation.y = panel.userData.baseRotY + Math.sin(t * 0.28 + index) * (reducedMotion ? 0 : 0.025);
   });
 
-  particles.rotation.y = t * (reducedMotion ? 0 : 0.028) + state.progress * 0.42;
-  particles.position.z = Math.sin(t * 0.24) * (reducedMotion ? 0 : 0.08);
-  curtainMaterial.uniforms.time.value = t;
-  curtainMaterial.uniforms.progress.value = state.progress;
-
   renderer.render(scene, camera);
 }
 
@@ -738,13 +751,8 @@ function animate(time) {
   if (!reducedMotion) requestAnimationFrame(animate);
 }
 
-function handlePointer(event) {
-  const point = event.touches ? event.touches[0] : event;
-  state.mouseX = clamp(point.clientX / window.innerWidth - 0.5, -0.5, 0.5);
-  state.mouseY = clamp(point.clientY / window.innerHeight - 0.5, -0.5, 0.5);
-}
-
 function start() {
+  initLuxuryParticles();
   initReveal();
   initGsapEnhancements();
   createThreeScene();
@@ -765,7 +773,4 @@ window.addEventListener("resize", () => {
   updateScrollState();
   if (window.ScrollTrigger) window.ScrollTrigger.refresh();
 });
-window.addEventListener("mousemove", handlePointer, { passive: true });
-window.addEventListener("touchmove", handlePointer, { passive: true });
-
 start();
