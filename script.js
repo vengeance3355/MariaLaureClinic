@@ -196,6 +196,7 @@ function initLuxuryParticles() {
 
   const mobile = window.innerWidth < 760;
   const particleCount = reducedMotion ? (mobile ? 18 : 28) : (mobile ? 38 : 78);
+  const particleSpeed = reducedMotion ? 0.25 : (mobile ? 0.65 : 0.95);
 
   window.particlesJS("particles-js", {
     particles: {
@@ -217,12 +218,12 @@ function initLuxuryParticles() {
         }
       },
       opacity: {
-        value: reducedMotion ? 0.18 : 0.26,
+        value: reducedMotion ? 0.22 : 0.34,
         random: true,
         anim: {
-          enable: !reducedMotion,
-          speed: 0.28,
-          opacity_min: 0.08,
+          enable: true,
+          speed: reducedMotion ? 0.12 : 0.42,
+          opacity_min: reducedMotion ? 0.12 : 0.09,
           sync: false
         }
       },
@@ -240,12 +241,12 @@ function initLuxuryParticles() {
         enable: true,
         distance: mobile ? 112 : 148,
         color: "#c7a062",
-        opacity: mobile ? 0.08 : 0.115,
+        opacity: mobile ? 0.12 : 0.16,
         width: 1
       },
       move: {
-        enable: !reducedMotion,
-        speed: mobile ? 0.34 : 0.48,
+        enable: true,
+        speed: particleSpeed,
         direction: "none",
         random: true,
         straight: false,
@@ -313,27 +314,6 @@ function makeCylinder(THREE, radiusTop, radiusBottom, height, material, position
   mesh.position.set(...position);
   mesh.rotation.set(...rotation);
   return mesh;
-}
-
-function makePhotoPanel(THREE, path, size, materialFallback, textureLoader) {
-  const texture = textureLoader.load(path);
-  if ("colorSpace" in texture && THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
-  texture.generateMipmaps = false;
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  const mat = new THREE.MeshBasicMaterial({
-    map: texture,
-    color: 0xffffff,
-    transparent: true,
-    opacity: 0.92,
-    side: THREE.DoubleSide
-  });
-  const group = new THREE.Group();
-  const plane = new THREE.Mesh(new THREE.PlaneGeometry(size[0], size[1]), mat);
-  const frame = makeBox(THREE, [size[0] + 0.06, size[1] + 0.06, 0.035], materialFallback, [0, 0, -0.035]);
-  frame.scale.z = 0.55;
-  group.add(frame, plane);
-  return group;
 }
 
 function makeServiceObject(THREE, type, mats) {
@@ -456,8 +436,7 @@ function createThreeScene() {
       transparent: true,
       opacity: 0.28,
       side: THREE.DoubleSide
-    }),
-    photoFrame: new THREE.MeshStandardMaterial({ color: 0xc7a062, metalness: 0.72, roughness: 0.35, transparent: true, opacity: 0.72 })
+    })
   };
 
   scene.add(new THREE.AmbientLight(0xf7f1e8, 1.1));
@@ -478,7 +457,6 @@ function createThreeScene() {
   goldLight.position.set(0, 1.2, -12.5);
   scene.add(goldLight);
 
-  const textureLoader = new THREE.TextureLoader();
   const stages = [];
 
   const clinic = new THREE.Group();
@@ -515,16 +493,6 @@ function createThreeScene() {
   mirrorGlass.scale.set(0.7, 1.1, 1);
   mirrorGlass.position.set(0.25, 0.74, -1.425);
   clinic.add(mirrorGlass);
-
-  const heroPanelA = makePhotoPanel(THREE, "source-assets/kolayrandevu/gallery-04.jpg", [1.52, 1.12], mats.photoFrame, textureLoader);
-  heroPanelA.position.set(-1.7, 0.75, -0.9);
-  heroPanelA.rotation.y = 0.28;
-  clinic.add(heroPanelA);
-
-  const heroPanelB = makePhotoPanel(THREE, "source-assets/kolayrandevu/gallery-01.jpg", [1.3, 0.92], mats.photoFrame, textureLoader);
-  heroPanelB.position.set(1.65, 0.58, -1.22);
-  heroPanelB.rotation.y = -0.34;
-  clinic.add(heroPanelB);
 
   world.add(clinic);
   stages.push({ group: clinic, index: 0, materials: captureMaterials(clinic) });
@@ -566,28 +534,6 @@ function createThreeScene() {
   world.add(services);
   stages.push({ group: services, index: 2, materials: captureMaterials(services) });
 
-  const gallery = new THREE.Group();
-  gallery.position.z = -8.35;
-  const galleryPaths = [
-    "source-assets/kolayrandevu/gallery-02.jpg",
-    "source-assets/kolayrandevu/gallery-03.jpg",
-    "source-assets/kolayrandevu/gallery-04.jpg",
-    "source-assets/kolayrandevu/gallery-07.jpg",
-    "source-assets/kolayrandevu/gallery-08.jpg",
-    "source-assets/kolayrandevu/gallery-10.jpg"
-  ];
-  const galleryPanels = galleryPaths.map((pathName, index) => {
-    const panel = makePhotoPanel(THREE, pathName, [1.52, 1.08], mats.photoFrame, textureLoader);
-    const col = index % 3;
-    const row = Math.floor(index / 3);
-    panel.position.set(-2.05 + col * 2.05, 0.54 - row * 1.28, -row * 0.42);
-    panel.rotation.y = -0.42 + col * 0.42;
-    gallery.add(panel);
-    return panel;
-  });
-  world.add(gallery);
-  stages.push({ group: gallery, index: 3, materials: captureMaterials(gallery) });
-
   const proof = new THREE.Group();
   proof.position.z = -10.9;
   const signalColors = [mats.rose, mats.gold, mats.teal, mats.white];
@@ -628,10 +574,6 @@ function createThreeScene() {
     pod.userData.baseY = pod.position.y;
     pod.userData.baseRotY = pod.rotation.y;
   });
-  galleryPanels.forEach((panel) => {
-    panel.userData.baseZ = panel.position.z;
-    panel.userData.baseRotY = panel.rotation.y;
-  });
 
   threeState = {
     THREE,
@@ -641,7 +583,6 @@ function createThreeScene() {
     world,
     stages,
     servicePods,
-    galleryPanels,
     bed,
     device,
     mirrorFrame,
@@ -682,7 +623,6 @@ function renderThree(time = 0) {
     world,
     stages,
     servicePods,
-    galleryPanels,
     bed,
     device,
     mirrorFrame,
@@ -735,12 +675,6 @@ function renderThree(time = 0) {
     pod.rotation.y = pod.userData.baseRotY + (reducedMotion ? 0 : t * (0.18 + index * 0.018));
     pod.position.y = pod.userData.baseY + Math.sin(t * 0.75 + index) * (reducedMotion ? 0 : 0.035);
     pod.scale.setScalar(0.92 + focus * 0.16);
-  });
-
-  galleryPanels.forEach((panel, index) => {
-    const wave = smoothstep(clamp(stageFloat - 2.85, 0, 1));
-    panel.position.z = panel.userData.baseZ + wave * (index % 2 ? 0.22 : -0.12);
-    panel.rotation.y = panel.userData.baseRotY + Math.sin(t * 0.28 + index) * (reducedMotion ? 0 : 0.025);
   });
 
   renderer.render(scene, camera);
